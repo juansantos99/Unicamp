@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+#include <string.h>
+//#include <conio.h>
 #define TAM 1000
 
 struct Contato{
@@ -8,7 +9,7 @@ struct Contato{
     char nome[102];
     char telefone[18];
     char email[102];
-    int sexo;
+    char sexo;
     int idade;
     float peso;
     float altura;
@@ -21,12 +22,17 @@ void consultar();
 void visualizar();
 void sair();
 int verifica_pos();
+void inicializar();
 //void zerar(); //excluir contato
 //int verifica_cod(int cod);
 
 
 
 int main() {
+
+  inicializar();
+
+  int opcao = 0; //opcao para selecao da agenda, qual menu selecionar
 
   do{
 
@@ -37,9 +43,8 @@ int main() {
     printf("4: Visualizar todos os contatos\n");
     printf("Sair!\n");
 
-    int opcao = 0; //opcao para selecao da agenda, qual menu selecionar
-
     scanf ("%d", &opcao);
+    __fpurge(stdin);
 
     switch(opcao){
 
@@ -58,12 +63,12 @@ int main() {
       break;
 
 
-      case 4:
+      /*case 4:
         visualizar();
-      break;
+      break;*/
 
       case 0:
-        system(pause);
+        system("pause");
       break;
     }
 
@@ -74,7 +79,9 @@ int main() {
 
 void cadastrar (int pos){ //cadastrando o contato
 
-  pos=verifica_pos();
+  pos = verifica_pos();
+
+  printf("Valor de pos: %d\n", pos);
 
   printf("Digite o nome: ");
   fgets(registros[pos].nome, 102, stdin);
@@ -87,7 +94,7 @@ void cadastrar (int pos){ //cadastrando o contato
 
   printf("Digite o sexo: ");
   //fgets (registros[pos].sexo, 1, stdin);
-  scanf("%d", &registros[pos].sexo);
+  scanf("%c", &registros[pos].sexo);
 
   printf("Digite a idade: ");
   //fgets (registros[pos].idade, 3, stdin);
@@ -101,16 +108,33 @@ void cadastrar (int pos){ //cadastrando o contato
   //fgets(registros[pos].altura, 3, stdin);
   scanf("%f", &registros[pos].altura);
 
-  registros[pos].vazio=1;
+  registros[pos].vazio = 1;
+
+}
+
+void inicializar(){
+
+    int cont = 0;
+
+    while (cont < 1000) {
+        registros[cont].vazio = 0;
+        cont++;
+    }
+
 }
 
 int verifica_pos() { //verificando posicao do vetor
-  int cont=0;
+
+  int cont = 0;
+
   while (cont<=1000) {
+
         if (registros[cont].vazio == 0)
            return(cont);
+
         cont++;
   }
+
 }
 
 void excluir(){
@@ -119,20 +143,56 @@ void excluir(){
   char nome[102];
   printf("****EXCLUIR CONTATO****\n");
   printf("Digite o nome da exclusao:\n");
-  fgets (nome, 102, stdin);
+  fgets(nome, 102, stdin);
 
-  while (cont<=1000){
-        if (registros[pos].nome == nome){
+  while (cont < 1000){
+
+        if (strcmp(nome, registros[cont].nome) == 0){
            if (registros[cont].vazio == 1) {
-              registros[cont].vazio=0;
+              registros[cont].vazio = 0;
               printf("\nExclusao feita com sucesso\n");
               break;
            }
         }
+
         cont++;
-        if (cont>1000)
+
+        if (cont > 1000)
            printf("****Nome nao encontrado!****\n");
+
   }
 
 
+}
+
+void consultar(){
+
+  int cont = 0;
+  char nome[102];
+
+  printf("****PESQUISAR CONTATO****\n");
+  printf("Digite o nome da busca:\n");
+  fgets (nome, 102, stdin);
+
+  while (cont<=1000){
+
+        if (strcmp(nome, registros[cont].nome) == 0){
+           if (registros[cont].vazio == 1) {
+              printf("%s\n", registros[cont].nome);
+              printf("%s\n", registros[cont].telefone);
+              printf("%s\n", registros[cont].email);
+              printf("%c\n", registros[cont].sexo);
+              printf("%d\n", registros[cont].idade);
+              printf("%.2f\n", registros[cont].peso);
+              printf("%.2f\n", registros[cont].altura);
+              break;
+           }
+        }
+
+        cont++;
+
+        if (cont > 1000)
+           printf("****Nome nao encontrado!****\n");
+
+  }
 }
