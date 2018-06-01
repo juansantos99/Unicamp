@@ -5,9 +5,9 @@
 
 struct Contato{
 
-    char nome [102];
-    char telefone [18];
-    char email [102];
+    char nome[102];
+    char telefone[18];
+    char email[102];
     int sexo;
     int idade;
     float peso;
@@ -28,44 +28,47 @@ int verifica_pos();
 
 int main() {
 
-do{
-  printf("****MENU AGENDA ELETRONICA****\n");
-  printf("1: Adicionar contato\n");
-  printf("2: Excluir contato\n");
-  printf("3: Pesquisar contato\n");
-  printf("4: Visualizar todos os contatos\n");
+  do{
 
-  int opcao; //opcao para selecao da agenda, qual menu selecionar
+    printf("****MENU AGENDA ELETRONICA****\n");
+    printf("1: Adicionar contato\n");
+    printf("2: Excluir contato\n");
+    printf("3: Pesquisar contato\n");
+    printf("4: Visualizar todos os contatos\n");
+    printf("Sair!\n");
 
-  scanf ("%d", &opcao);
+    int opcao = 0; //opcao para selecao da agenda, qual menu selecionar
 
-  switch (opcao){
+    scanf ("%d", &opcao);
 
-    case 1:{
-      cadastrar();
+    switch(opcao){
+
+      case 1:
+        cadastrar();
+        break;
+
+
+      case 2:
+        excluir();
+      break;
+
+
+      case 3:
+        consultar();
+      break;
+
+
+      case 4:
+        visualizar();
+      break;
+
+      case 0:
+        system(pause);
       break;
     }
 
-    case 2:{
-      excluir();
-      break;
-    }
+  }while(opcao !=5);
 
-    case 3:{
-      consultar();
-      break;
-    }
-
-    case 4: {
-      visualizar();
-      break;
-
-    }case 0:{
-      system(pause);
-      break;
-    }while (opcao !=5);
-
-  }
   return 0;
 }
 
@@ -102,34 +105,34 @@ void cadastrar (int pos){ //cadastrando o contato
 }
 
 int verifica_pos() { //verificando posicao do vetor
-int cont=0;
-while (cont<=1000) {
-      if (registros[cont].vazio==0)
-         return(cont);
-      cont++;
-}
+  int cont=0;
+  while (cont<=1000) {
+        if (registros[cont].vazio == 0)
+           return(cont);
+        cont++;
+  }
 }
 
 void excluir(){
 
-  int nome, cont=0;
+  int cont = 0;
+  char nome[102];
   printf("****EXCLUIR CONTATO****\n");
   printf("Digite o nome da exclusao:\n");
-  scanf("%s",&nome);
+  fgets (nome, 102, stdin);
 
-
-while (cont<=1000) {
-      if (registros[pos].nome==nome){
-
-         if (registros[cont].vazio==1) {
-            registros[cont].vazio=0;
-            printf("\nExclusao feita com sucesso\n");
-            break;
-         }}
-      cont++;
-      if (cont>1000)
-         printf("****Nome nao encontrado!****\n");
-}
+  while (cont<=1000){
+        if (registros[pos].nome == nome){
+           if (registros[cont].vazio == 1) {
+              registros[cont].vazio=0;
+              printf("\nExclusao feita com sucesso\n");
+              break;
+           }
+        }
+        cont++;
+        if (cont>1000)
+           printf("****Nome nao encontrado!****\n");
+  }
 
 
 }
