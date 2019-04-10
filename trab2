@@ -1,0 +1,28 @@
+#include <stdio.h>
+int main (){
+
+int i, num ,j, divisor, aux; 
+
+printf("Digite um numero: ");
+scanf("%d", &num);
+
+	
+for(i = 1; i< num; i++){
+    divisor=0;
+    for(j=1;j<=i;j++){
+        if(i%j==0)
+        {
+            divisor++;
+        }
+
+    }
+       if(divisor==2)
+        {
+            aux=aux+i;
+        }
+}
+printf("\nA soma dos primos eh:%d",aux);
+	
+	
+
+}
